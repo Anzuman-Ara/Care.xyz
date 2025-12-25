@@ -1,26 +1,365 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  /* This maps 'primary' to the class 'bg-primary', 'text-primary', etc. */
+  --color-primary: #7bb3d1; /* Soft teal */
+  --color-secondary: #d4a574; /* Warm beige */
+  --color-accent: #f4e1d2; /* Soft peach */
+  --color-background: #fefefe; /* Off-white */
+  --color-foreground: #4a4a4a; /* Warm gray */
+
+  /* Map your custom font */
+  --font-comic: 'Comic Sans MS', cursive, sans-serif;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+:root {
+  --background: #ebf4f7;
+  --foreground: #4a4a4a;
+  --primary: #7bb3d1;
+  --secondary: #2f6e65;
+  --accent: #f4e1d2;
+  --muted: #e9f3f3;
+  --border: #e0e0e0;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #2a2a2a;
+    --foreground: #e0e0e0;
+    --primary: #5a9bb8;
+    --secondary: #b8945f;
+    --accent: #d4b8a5;
+    --muted: #3a3a3a;
+    --border: #555555;
   }
 }
 
 body {
-  background: var(--background);
+  background: linear-gradient(135deg, var(--background) 0%, var(--muted) 100%);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-comic);
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+.bg-background{
+  background-color: var(--background);
+}
+
+.text-secondary{
+  color: var(--secondary);
+}
+
+.bg-secondary{
+  background-color: var(--secondary);
+}
+
+/* Custom Component Classes */
+@utility btn-primary {
+  background: var(--secondary);
+  color: white;
+  border: none;
+  border-radius: 1rem;
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  font-size: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    background: #d9a559;
+  }
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+@utility footer {
+  background: linear-gradient(180deg, var(--primary) 0%, var(--accent) 100%);
+  color: white;
+  padding: 3rem 0 1rem;
+  margin-top: auto;
+}
+
+@utility footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+}
+
+@utility footer-section {
+  display: flex;
+  flex-direction: column;
+}
+
+@utility footer-logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color: white;
+}
+
+@utility footer-heading {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: white;
+}
+
+@utility footer-link {
+  color: black;
+  text-decoration: none;
+  margin-bottom: 0.5rem;
+  transition: all 0.3s ease;
+  &:hover {
+    color: var(--secondary);
+    transform: scale(1.05);
+  }
+}
+
+@utility footer-social {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+@utility social-icon {
+  width: 2rem;
+  height: 2rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s ease;
+  &:hover {
+    color: var(--secondary);
+    opacity: 0.5;
+    background: rgba(255, 255, 255, 0.2);
+  }
+}
+
+@utility footer-text {
+  color: black;
+  margin-bottom: 0.5rem;
+}
+
+@utility footer-bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin-top: 2rem;
+  padding-top: 1rem;
+  text-align: center;
+  color: gray;
+  opacity: 0.9;
+}
+
+@utility card {
+  background: linear-gradient(75deg, white 0%, var(--primary) 200%);
+  border: 1px solid var(--border);
+  border-radius: 1.25rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  padding: 2rem;
+  transition: all 0.3s ease;
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+  }
+}
+
+@utility details-card {
+  background: linear-gradient(75deg, white 0%, var(--accent) 200%);
+  border: 1px solid var(--border);
+  border-radius: 1.25rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  padding: 2rem;
+  transition: all 0.3s ease;
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+  }
+}
+
+@utility banner {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+  color: var(--foreground);
+  padding: 3rem 2rem;
+  border-radius: 1.5rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+@utility container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+@utility section {
+  padding: 4rem 0;
+}
+
+@utility about-section {
+  background: linear-gradient(135deg, var(--accent) 0%, white 100%);
+  border: 2px solid var(--border);
+  border-radius: 1.5rem;
+  padding: 3rem;
+  text-align: center;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+@utility testimonial-section {
+  background: linear-gradient(35deg, white 0%, var(--accent) 200%);
+  border-radius: 1.5rem;
+  padding: 3rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+@utility testimonial-card {
+  background: white;
+  border-radius: 1rem;
+  padding: 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  position: relative;
+  transition: all 0.3s ease;
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  }
+  &::before {
+    content: '"';
+    font-size: 4rem;
+    color: var(--primary);
+    position: absolute;
+    top: -10px;
+    left: 20px;
+    font-family: serif;
+  }
+}
+
+@utility auth-form {
+  background: linear-gradient(135deg, white 0%, var(--muted) 100%);
+  border: 1px solid var(--border);
+  border-radius: 1.25rem;
+  padding: 2.5rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  max-width: 28rem;
+  width: 100%;
+}
+
+@utility auth-input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  background: white;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  &:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(123, 179, 209, 0.1);
+  }
+}
+
+@utility auth-button {
+  width: 100%;
+  background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 180%);
+  color: white;
+  border: none;
+  border-radius: 0.75rem;
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  font-size: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  }
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+@utility auth-link {
+  color: var(--primary);
+  text-decoration: none;
+  transition: color 0.3s ease;
+  &:hover {
+    color: var(--secondary);
+  }
+}
+
+@utility google-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  background: white;
+  color: var(--foreground);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  padding: 0.75rem 1.5rem;
+  font-weight: 500;
+  font-size: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  &:hover {
+    background: var(--muted);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transform: translateY(-1px);
+  }
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+/* Swiper Styles */
+.swiper-pagination {
+  bottom: 2px !important;
+}
+
+.swiper-pagination-bullet {
+  width: 6px !important;
+  height: 6px !important;
+  background: var(--primary) !important;
+  opacity: 0.7 !important;
+  transition: all 0.3s ease !important;
+}
+
+.swiper-pagination-bullet-active {
+  background: var(--secondary) !important;
+  opacity: 1 !important;
+  transform: scale(1.2) !important;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  color: var(--secondary) !important;
+  width: 40px !important;
+  height: 40px !important;
+  transition: all 0.3s ease !important;
+}
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  background: white !important;
+  border-radius: 10px;
+  transform: scale(1.1) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+}
+
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  font-size: 16px !important;
+  font-weight: bold !important;
 }
