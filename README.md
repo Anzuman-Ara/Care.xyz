@@ -1,6 +1,10 @@
 # Care.xyz 🏥
 
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Visit%20Site-blue?style=for-the-badge&logo=netlify)](https://care-xyz.netlify.app)
+
 A modern, full-stack care services booking platform built with Next.js, MongoDB, and Stripe. Connect families with professional caregivers for baby care, elderly care, and sick people care services.
+
+**🌐 Live Site:** [https://care-xyz.netlify.app](https://care-xyz.netlify.app)
 
 ## ✨ Features
 
@@ -189,7 +193,7 @@ care-xyz/
 
 4. **Deploy**
    - Netlify will automatically build and deploy
-   - Your site will be live at `https://your-site-name.netlify.app`
+   - Your site will be live at: `https://your-site-name.netlify.app`
 
 ## 📡 API Endpoints
 
