@@ -52,8 +52,8 @@ export default function RegisterPage() {
         });
 
         if (result?.ok) {
-          toast.success("Registration successful! Welcome to Care.xyz!");
           router.push("/");
+          toast.success("Registration successful! Welcome to Care.xyz!");
         } else {
           setError("Registration successful, but login failed. Please login manually.");
         }
