@@ -75,6 +75,10 @@ export const authOptions = {
       }
       return true;
     },
+    async redirect({ url, baseUrl }: { url: string; baseUrl: string }) {
+      // Redirect to homepage after successful login
+      return baseUrl;
+    },
     async jwt({ token, user }: { token: any; user: any }) {
       if (user) {
         token.id = user.id;
