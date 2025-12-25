@@ -30,6 +30,15 @@ export default function MyBookingsPage() {
   const [showCancelConfirm, setShowCancelConfirm] = useState(false);
   const [cancelling, setCancelling] = useState(false);
   const [loadingBookings, setLoadingBookings] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pagination, setPagination] = useState<{
+    currentPage: number;
+    totalPages: number;
+    totalBookings: number;
+    hasNextPage: boolean;
+    hasPrevPage: boolean;
+    limit: number;
+  } | null>(null);
   const [processingPayment, setProcessingPayment] = useState(false);
 
   useEffect(() => {
@@ -41,13 +50,15 @@ export default function MyBookingsPage() {
     }
   }, [session, status, router]);
 
-  const fetchBookings = async () => {
+  const fetchBookings = async (page = 1) => {
     setLoadingBookings(true);
     try {
-      const response = await fetch("/api/bookings");
+      const response = await fetch(`/api/bookings?page=${page}&limit=8`);
       const data = await response.json();
       if (data.bookings) {
         setBookings(data.bookings);
+        setPagination(data.pagination);
+        setCurrentPage(page);
       } else {
         console.error("Failed to fetch bookings:", data.error);
         setBookings([]);
@@ -230,6 +241,34 @@ export default function MyBookingsPage() {
               </table>
             )}
           </div>
+
+          {/* Pagination Controls */}
+          {pagination && pagination.totalPages > 1 && (
+            <div className="flex items-center justify-between mt-6">
+              <div className="text-sm text-muted-foreground">
+                Showing {((pagination.currentPage - 1) * pagination.limit) + 1} to {Math.min(pagination.currentPage * pagination.limit, pagination.totalBookings)} of {pagination.totalBookings} bookings
+              </div>
+              <div className="flex items-center space-x-2">
+                <button
+                  onClick={() => fetchBookings(pagination.currentPage - 1)}
+                  disabled={!pagination.hasPrevPage}
+                  className="px-3 py-1 text-sm border border-border rounded hover:bg-muted disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Previous
+                </button>
+                <span className="text-sm text-muted-foreground">
+                  Page {pagination.currentPage} of {pagination.totalPages}
+                </span>
+                <button
+                  onClick={() => fetchBookings(pagination.currentPage + 1)}
+                  disabled={!pagination.hasNextPage}
+                  className="px-3 py-1 text-sm border border-border rounded hover:bg-muted disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Next
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </main>
 

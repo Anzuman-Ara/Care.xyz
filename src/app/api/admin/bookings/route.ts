@@ -16,11 +16,40 @@ export async function GET(request: Request) {
 
     await dbConnect();
 
+    // Get pagination parameters from URL
+    const { searchParams } = new URL(request.url);
+    const page = parseInt(searchParams.get('page') || '1');
+    const limit = parseInt(searchParams.get('limit') || '8');
+
+    // Calculate skip value for pagination
+    const skip = (page - 1) * limit;
+
+    // Get total count for pagination metadata
+    const totalBookings = await Booking.countDocuments();
+
+    // Get paginated bookings
     const bookings = await Booking.find({})
       .populate('user', 'email')
-      .sort({ createdAt: -1 });
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit);
 
-    return NextResponse.json({ bookings });
+    // Calculate pagination metadata
+    const totalPages = Math.ceil(totalBookings / limit);
+    const hasNextPage = page < totalPages;
+    const hasPrevPage = page > 1;
+
+    return NextResponse.json({
+      bookings,
+      pagination: {
+        currentPage: page,
+        totalPages,
+        totalBookings,
+        hasNextPage,
+        hasPrevPage,
+        limit
+      }
+    });
   } catch (error) {
     console.error("Fetch admin bookings error:", error);
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });
