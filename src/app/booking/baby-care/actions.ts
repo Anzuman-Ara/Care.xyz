@@ -40,7 +40,7 @@ export async function handleSubmit(formData: FormData) {
   console.log("Booking created:", booking._id);
 
   // Create Stripe checkout session
-  const response = await fetch("/api/stripe", {
+  const response = await fetch(`${process.env.NEXTAUTH_URL}/api/stripe`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
